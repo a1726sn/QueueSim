@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 if __name__=='__main__':
 
   # 準備
-  totalTime = 60*60*24*3                         # シミュレーション時間（秒）
+  totalTime = 60*60*24*100                       # シミュレーション時間（秒）
   s = 1                                          # 窓口数
   mu = 3                                         # サービス平均時間（分）
   dist_type = "uniform"                          # 一様分布
-  node1 = Node("node1", mu, s, dist_type)        # ノード1を生成
+  node1 = Node("node1", mu, s, dist_type)        # 店を生成
   lam = 5                                        # 客の到着平均間隔（分)
   arrival = -lam * 60 * math.log(rnd.random())   # 客到着残時間（指数分布）
 
@@ -33,7 +33,7 @@ if __name__=='__main__':
     # ノードで1秒進める
     node1.sim()
 
-    # グラフ出力用に10分ごとの待ちキューの客数を記録
+    # グラフ出力用に10分ごとの待ち行列の客数を記録
     if i % (60*x_scale) == 0:
       y.append(len(node1.queue))
 
@@ -50,6 +50,6 @@ if __name__=='__main__':
   plt.grid()
   plt.xlim([0, totalTime/60])
   plt.ylim([0, max(y)*1.2])
-  plt.show()
+#  plt.show()
 
 ''' ************************************************************ '''

@@ -28,12 +28,12 @@ class Node:
   def enqeueu(self):
     self.queue.append(self.distribution(self.dist_type))
 
-  ''' 待ちキューから取り出す '''
+  ''' 待ち行列から取り出す '''
   def deqeueu(self, i):
-    # 待ちキューから取り出す
+    # 待ち行列から取り出す
     self.service[i] = self.queue.popleft()
 
-    # もし次のノードがあれば、次のノードの中で一番空いている待ちキューに追加
+    # もし次のノードがあれば、次のノードの中で一番空いている待ち行列に追加
     if self.next_node != None:
       min_node = self.next_node[0]
       for node in self.next_node:
@@ -57,7 +57,7 @@ class Node:
       if self.service[i] > 0:
         self.l += 1
 
-      self.l += len(self.queue)    # 系内客数の合計値に待ち客数を追加
-      self.lq += len(self.queue)   # 待ち客数の合計値に待ち客数を追加
+    self.l += len(self.queue)    # 系内客数の合計値に待ち客数を追加
+    self.lq += len(self.queue)   # 待ち客数の合計値に待ち客数を追加
 
 ''' ************************************************************ '''
