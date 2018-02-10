@@ -1,8 +1,6 @@
 import math
 import random as rnd
 from Node import Node
-import numpy as np
-import matplotlib.pyplot as plt
 
 ''' メインメソッド '''
 if __name__=='__main__':
@@ -19,12 +17,6 @@ if __name__=='__main__':
   lam = 1                                            # 客の到着平均間隔（分)
   arrival = -lam * 60 * math.log(rnd.random())       # 客到着残時間（指数分布）
   
-  x_scale = 10                              # X軸の縮尺（10分区切り）
-  x = np.arange(0, totalTime/60, x_scale)   # グラフ出力用X軸配列
-  y = []                                    # グラフ出力用Y軸配列（ノード分）
-  for i in range(len(nodes)):
-    y.append([])
-
   # シミュレーション
   for i in range(0, totalTime):
     # 客到着残時間を1秒減らす
@@ -38,9 +30,6 @@ if __name__=='__main__':
     # 各ノードで1秒進める
     for idx, node in enumerate(nodes):
       node.sim()
-      # グラフ出力用にx_scale分ごとの待ち行列の客数を記録
-      if i % (60*x_scale) == 0:
-        y[idx].append(len(node.queue))
 
   # 結果算出表示
   l_sum = 0          # 系内客数のすべてのノードの合計値
@@ -51,17 +40,5 @@ if __name__=='__main__':
     
   print("L =", l_sum/totalTime)
   print("Lq =", lq_sum/totalTime)
-
-  # グラフ表示
-  for idx, sub in enumerate(y):
-    plt.plot(x, sub, label=nodes[idx].name)
-  plt.legend()
-  plt.title("Simulation_4")
-  plt.xlabel("Time (min)")
-  plt.ylabel("L")
-  plt.grid()
-  plt.xlim([0, totalTime/60])
-  plt.ylim([0, max(np.array(y).flatten())*1.2])
-#  plt.show()
 
 ''' ************************************************************ '''

@@ -10,7 +10,7 @@ if __name__=='__main__':
   s = 4                                              # 窓口数
   mu = 2                                             # サービス平均時間（分）
   dist_type = "expotential"                          # 指数分布
-  n = 6                                            # N段数
+  n = 6                                              # N段数
   nodes = []                                         # ノードの配列
   prev = Node("node1", mu, s, dist_type)             # ノード1を生成
   nodes.append(prev)                                 # ノードの配列にノード1を追加
