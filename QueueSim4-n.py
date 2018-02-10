@@ -10,10 +10,23 @@ if __name__=='__main__':
   s = 4                                              # 窓口数
   mu = 2                                             # サービス平均時間（分）
   dist_type = "expotential"                          # 指数分布
-  node3 = Node("node3", mu, s, dist_type)            # ノード3を生成
-  node2 = Node("node2", mu, s, dist_type, [node3])   # ノード2を生成
-  node1 = Node("node1", mu, s, dist_type, [node2])   # ノード1を生成
-  nodes = [node1, node2, node3]                      # ノードの配列
+  n = 6                                              # N段数
+  nodes = []                                         # ノードの配列
+  prev = Node("node1", mu, s, dist_type)             # ノード1を生成
+  nodes.append(prev)                                 # ノードの配列にノード1を追加
+  for i in range(1, n):                              # ノードをN段直列に接続
+    node = Node("node"+str(i+1), mu, s, dist_type)
+    prev.next_node = [node]
+    prev = node
+    nodes.append(node)
+
+  net= ""                                            # ネットワークを確認
+  for node in nodes:
+    net += node.name
+    if node.next_node != None:
+      net += " -> "
+  print(net)
+  
   lam = 1                                            # 客の到着平均間隔（分)
   arrival = -lam * 60 * math.log(rnd.random())       # 客到着残時間（指数分布）
   
@@ -25,7 +38,7 @@ if __name__=='__main__':
     # 新たな客が到着した時
     if arrival <= 0:
       arrival = -lam * 60 * math.log(rnd.random())
-      node1.enqeueu()
+      nodes[0].enqeueu()
       
     # 各ノードで1秒進める
     for idx, node in enumerate(nodes):
